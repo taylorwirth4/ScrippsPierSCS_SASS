@@ -1,6 +1,8 @@
 name: ScrippsPierSCS
 channels:
-  - conda-forge
+  - conda-forge  
+  - defaults
+  - conda-forge/label/broken
 dependencies:
   - pandas
   - numpy
