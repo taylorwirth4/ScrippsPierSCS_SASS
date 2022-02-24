@@ -1,4 +1,4 @@
-name: example-environment
+name: ScrippsPierSCS
 channels:
   - conda-forge
 dependencies:
@@ -9,3 +9,9 @@ dependencies:
   - requests
   - bs4
   - os
+  - psutil
+  - toolz
+  - dill
+  - partd
+  - bokeh
+  - dash
