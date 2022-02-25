@@ -4,7 +4,7 @@ def get_all_dr(path):
     import requests
     import pandas as pd
 
-    soup = BeautifulSoup(requests.get(path).text,features="lxml")
+    soup = BeautifulSoup(requests.get(path).text,features="html.parser")
 
     allpath = []
     for link in soup.find_all('a'):

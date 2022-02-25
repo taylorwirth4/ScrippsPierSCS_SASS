@@ -104,4 +104,5 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
          xanchor="right",
           x=1))
           
+      fig.show()
       return
