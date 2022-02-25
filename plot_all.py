@@ -69,7 +69,7 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
                     name='SBEsal'),
               secondary_y=False,
               row=5, col=1)
-      fig.update_yaxes(range=[33, 34], row=5, col=1,secondary_y=False)
+      #fig.update_yaxes(range=[33, 34], row=5, col=1,secondary_y=False)
       fig.add_trace(go.Scatter(x=datetime, y=pressure,
                     #mode='lines+markers',
                     name='press',
