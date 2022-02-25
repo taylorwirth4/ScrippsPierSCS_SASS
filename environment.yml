@@ -2,7 +2,6 @@ name: ScrippsPierSCS
 channels:
   - conda-forge  
   - defaults
-  - conda-forge/label/broken
 dependencies:
   - pandas
   - numpy
@@ -17,3 +16,5 @@ dependencies:
   - partd
   - bokeh
   - dash
+  - jupyterlab
+  - ipykernel
