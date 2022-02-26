@@ -5,6 +5,7 @@ def get_all_dr(path):
     from bs4 import BeautifulSoup
     import requests
     import pandas as pd
+    import numpy as np
 
     soup = BeautifulSoup(requests.get(path).text,features="html.parser")
 
@@ -54,5 +55,8 @@ def get_all_dr(path):
     'O2_MN': int, 'O2_SN': int, 'O2con': float, 'O2sat': float, 'O2temp': float,
     'SBEtemp': float, 'SBEcond': float, 'SBEsal': float, 'SBEday': int, 'SBEyear': int
     })
+
+    # drop data rows if SBE salinity is outside the standard deviation
+    df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (df['SBEsal'].std())]
 
     return df
