@@ -9,3 +9,4 @@ dependencies:
   - plotly
   - requests
   - bs4
+  - appmode
