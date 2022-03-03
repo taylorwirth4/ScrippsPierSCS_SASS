@@ -36,7 +36,8 @@ def get_all_dr(path):
     # rename the columns so it's easy to use
     col_names = ['internet_datetime','IP','samp_type','samp_num','calib_num','calib_rep',
             'date','time','vbatt','vtherm','vint','vext','isobatt','contemp','pHtemp','press',
-            'pHint','pHext','O2_MN','O2_SN','O2con','O2sat','O2temp','a','b','c','d','e','f','g',
+            'pHint','pHext','O2_MN','O2_SN','O2con','O2sat','O2temp',
+            'Dphase','Bphase','Rphase','Bamp','Bpot','Ramp','Raw_Temp',
             'SBEtemp','SBEcond','SBEsal','SBEday','SBEmon','SBEyear','SBEtime']
 
     df = pd.DataFrame(columns=col_names) # create the pandas DataFrame
@@ -59,4 +60,4 @@ def get_all_dr(path):
     # drop data rows if SBE salinity is outside the standard deviation
     df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (df['SBEsal'].std())]
 
-    return df
+    return df, col_names
