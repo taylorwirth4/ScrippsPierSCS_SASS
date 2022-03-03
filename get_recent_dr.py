@@ -12,8 +12,6 @@ def get_recent_dr(path):
 
 
     # read the latest download date from the last downloaded file
-    all_files = os.listdir()
-    txt_files = filter(lambda x: x[-4:] == '.txt', all_files)
     txt = glob.glob('*.txt')
     df = pd.read_csv(' '.join(txt),sep='\t')
     
@@ -61,6 +59,8 @@ def get_recent_dr(path):
             if file.startswith('data_') == True: # find the file names that start with 'data_'
                 allnewpath.append(allnewfolders[i]+file) # append each file name into a list
     allnewpath = allnewpath[1::2]
+    findex = allnewpath.index(last_path) # find the folder index of the last data download 
+    allnewpath = allnewpath[findex+1:] # create new list of new data folders
 
     allnewdata = [] # go thru each file and append the data
     for i in range(0,len(allnewpath)):
@@ -69,6 +69,7 @@ def get_recent_dr(path):
         text = response.text # gets a text format of the .dat file
         data_by_line = text.split('\n') # splits the text by return line
         allnewdata.extend(data_by_line) # concatenate each data file
+    allnewdata
 
     # append the newly download data to the data frame
     # there are sometimes random empty rows in the .dat files
@@ -87,6 +88,7 @@ def get_recent_dr(path):
     })
 
     # drop data rows if SBE salinity is outside the standard deviation
-    df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (df['SBEsal'].std())]
+    df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (2*df['SBEsal'].std())]
+    col_names = df.columns
 
-    return df
+    return df, col_names
