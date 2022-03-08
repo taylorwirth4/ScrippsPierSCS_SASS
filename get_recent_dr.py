@@ -89,6 +89,8 @@ def get_recent_dr(path):
 
     # drop data rows if SBE salinity is outside the standard deviation
     df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (2*df['SBEsal'].std())]
+    # remove pressure outliers
+    df['press']=df['press'][~(np.abs(df['press']-df['press'].mean()) > (3*df['press'].std()))]
     col_names = df.columns
 
     return df, col_names
