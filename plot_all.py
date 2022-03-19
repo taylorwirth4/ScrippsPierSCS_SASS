@@ -27,13 +27,12 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
 # delta pH
       fig.add_trace(go.Scatter(x=datetime, y=pHint-pHext,
                     #mode='lines+markers',
-                    name='$\Delta pH (int-ext)$'),
+                    name='delta_pH (int-ext)'),
                     secondary_y=False,
              row=2, col=1)
       fig.update_yaxes(range=[-np.max(pHint-pHext), np.max(pHint-pHext)], row=2, col=1)
       fig.add_hline(y=0, row=2)
       fig.add_vline(x=datetime[1])
-
 
 # Oxygen
       fig.add_trace(go.Scatter(x=datetime, y=O2con,
@@ -58,11 +57,16 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
                     name='O2temp'),
               secondary_y=False,
               row=4, col=1)
-      fig.add_trace(go.Scatter(x=datetime, y=pHtemp,
+      TC_offset = np.mean(SBEtemp)-np.mean(pHtemp)
+
+      fig.add_trace(go.Scatter(x=datetime, y=pHtemp+TC_offset,
                     #mode='lines+markers',
-                    name='pHtemp'),
-              secondary_y=True,
+                    name='pHtemp',
+                    text=["pH_temp offset"],
+                    textposition="top center"),
+              secondary_y=False,
               row=4, col=1)
+
 # Salinity and pressure
       fig.add_trace(go.Scatter(x=datetime, y=SBEsal,
                     #mode='lines+markers',
@@ -84,8 +88,8 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
       fig['layout']['yaxis3']['title']='delta_pH'
       fig['layout']['yaxis5']['title']='O2con (umol/kg)'
       fig['layout']['yaxis6']['title']='O2sat (%)'
-      fig['layout']['yaxis7']['title']='SBE & O2temp (C)'
-      fig['layout']['yaxis8']['title']='pHtemp (C)'
+      fig['layout']['yaxis7']['title']='Temperature (C)'
+      #fig['layout']['yaxis8']['title']='pHtemp (C)'
       fig['layout']['yaxis9']['title']='Salinity (PSU)'
       fig['layout']['yaxis10']['title']='Pressure (dbar)'
 
@@ -103,6 +107,18 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
           y=1.02,
          xanchor="right",
           x=1))
+
+      # add TCoffset annotation
+      TCstring = 'pH_temp offset = '+ '{:.2f}'.format(TC_offset)
+      fig.add_annotation(dict(font=dict(color='#B6E880',size=12),
+                                        x=0,
+                                        y=.38,
+                                        showarrow=False,
+                                        text=TCstring,
+                                        textangle=0,
+                                        xanchor='left',
+                                        xref="paper",
+                                        yref="paper"))
           
       fig.show()
       return

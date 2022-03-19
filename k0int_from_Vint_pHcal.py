@@ -1,4 +1,5 @@
 #  Calculate k0int for each calibration point
+import numpy as np
 def k0int_from_Vint_pHcal(Vint, pHcal, T_C):
     '''
     Inputs
@@ -15,7 +16,7 @@ def k0int_from_Vint_pHcal(Vint, pHcal, T_C):
     R    = 8.31451          # J/(mol K)
     F    = 96487            # Faraday constant Coulomb / mol
 
-    k2_int = -0.00125
+    k2_int = -0.001101
     k2_ext = -0.001048
 
     # Lumped, converted quantities
@@ -24,6 +25,6 @@ def k0int_from_Vint_pHcal(Vint, pHcal, T_C):
 
     # Nernst calibration coefficients, standard-ish potentials
     k0int_insitu = Vint-S_Nernst*pHcal # Calc E0int from Nernst & pH @ calibration point
-    k0int = k0int_insitu-k2_int*T_C
+    k0int = k0int_insitu+k2_int*(25-T_C)
 
-    return k0int_insitu, k0int
+    return k0int

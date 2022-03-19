@@ -1,4 +1,5 @@
 # Correct O2 following Aanderaa salinity compensation calcs from manual
+import numpy as np
 def correct_DO_with_sal(O2_uM, T_C, pressure, sal_meas, sal_input=0):
     '''
     Inputs

@@ -1,5 +1,6 @@
 #  Calculate k0ext for each calibration point
 def k0ext_from_Vext_pHcal(Vext, pHcal, T_C, calsal=35):
+    import numpy as np
     '''
     Inputs
         Vext (V): External ref voltage
@@ -16,7 +17,7 @@ def k0ext_from_Vext_pHcal(Vext, pHcal, T_C, calsal=35):
     R    = 8.31451          # J/(mol K)
     F    = 96487            # Faraday constant Coulomb / mol
 
-    k2_int = -0.00125
+    k2_int = -0.001101
     k2_ext = -0.001048
 
     # Lumped, converted quantities
@@ -42,6 +43,6 @@ def k0ext_from_Vext_pHcal(Vext, pHcal, T_C, calsal=35):
 
     # Nernst calibration coefficients, standard-ish potentials
     k0ext_insitu = Vext+S_Nernst*np.log10(aHfree_aCl)
-    k0ext = k0ext_insitu-k2_ext*T_C
+    k0ext = k0ext_insitu+k2_ext*(25-T_C)
 
-    return k0ext_insitu, k0ext
+    return k0ext

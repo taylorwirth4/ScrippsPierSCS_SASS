@@ -1,4 +1,5 @@
 # Calculate tris pH
+import numpy as np
 def pHtris_from_T(T_C, S=35):
     T_K = T_C+273.15
 
