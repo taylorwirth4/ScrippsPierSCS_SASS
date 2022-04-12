@@ -13,7 +13,8 @@ def get_recent_dr(path):
 
     # read the latest download date from the last downloaded file
     txt = glob.glob('*.txt')
-    df = pd.read_csv(' '.join(txt),sep='\t')
+    df = pd.read_csv(txt[1],sep='\t')
+    #df = pd.read_csv(' '.join(txt),sep='\t')
     
     # find the datetime of the last sample
     date = df.iloc[-1]['date']
@@ -32,7 +33,7 @@ def get_recent_dr(path):
 
     # search the last downloaded file for the last data time
     last = [data_by_line.index(l) for l in data_by_line if l.startswith(time)]
-    lastdata = data_by_line[last[0]] # this is the last data line in the download file
+    #lastdata = data_by_line[last[0]] # this is the last data line in the download file
 
     # download data starting from that last datetime of the same file 
     for i in range(last[0]+1,len(data_by_line)):
@@ -41,7 +42,7 @@ def get_recent_dr(path):
                 df.loc[len(df)] = data_by_line[i].split()
             else: # if data does not have sensor name in string, put NA in string
                 datastring = data_by_line[i].split()
-                datastring.insert(2,'NA')
+                datastring.insert(2,'SCS002')
                 df.loc[len(df)] = datastring
                 
     # find the rest of the files and append the data
@@ -85,7 +86,7 @@ def get_recent_dr(path):
                 df.loc[len(df)] = allnewdata[i].split()
             else: # if data does not have sensor name in string, put NA in string
                 datastring = allnewdata[i].split()
-                datastring.insert(2,'NA')
+                datastring.insert(2,'SCS002')
                 df.loc[len(df)] = datastring
 
     # change the data types for important variables
@@ -96,10 +97,6 @@ def get_recent_dr(path):
     'SBEtemp': float, 'SBEcond': float, 'SBEsal': float, 'SBEday': int, 'SBEyear': int
     })
 
-    # drop data rows if SBE salinity is outside the standard deviation
-    df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (10*df['SBEsal'].std())]
-    # remove pressure outliers
-    df['press']=df['press'][~(np.abs(df['press']-df['press'].mean()) > (3*df['press'].std()))]
     col_names = df.columns
 
     return df, col_names

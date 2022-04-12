@@ -50,7 +50,7 @@ def get_all_dr(path):
                 df.loc[len(df)] = alldata[i].split()
             else: # if data does not have sensor name in string, put NA in string
                 datastring = alldata[i].split()
-                datastring.insert(2,'NA')
+                datastring.insert(2,'SCS002')
                 df.loc[len(df)] = datastring
                 
         #df.append(pd.DataFrame((data_by_line[i].split())).T)
