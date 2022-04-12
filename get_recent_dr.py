@@ -1,7 +1,7 @@
 def get_recent_dr(path):
    # this python script looks at a SCCOOS dr path, looks through all the folders and grabs all the files
     # from the last time SIOpier_SCS_dr_liveipynb was run.
-    # It then reads all files from the last data file and concatenates the data lines into a pandas DataFrame
+    # It then reads all files starting from the last data file and concatenates the data lines into a pandas DataFrame
 
     from bs4 import BeautifulSoup
     import requests
@@ -37,8 +37,13 @@ def get_recent_dr(path):
     # download data starting from that last datetime of the same file 
     for i in range(last[0]+1,len(data_by_line)):
         if len(data_by_line[i]) > 270:
-                df.loc[len(df)] = data_by_line[i].split() #appends to the dataframe
-
+            if len(data_by_line[i].split()) > 37: # if the data has sensor name in data string
+                df.loc[len(df)] = data_by_line[i].split()
+            else: # if data does not have sensor name in string, put NA in string
+                datastring = data_by_line[i].split()
+                datastring.insert(2,'NA')
+                df.loc[len(df)] = datastring
+                
     # find the rest of the files and append the data
     soup = BeautifulSoup(requests.get(path).text,features="html.parser")
     allfolders = [] # find all folders in the path
@@ -76,8 +81,12 @@ def get_recent_dr(path):
     # this goes through each line and removes any data lines less than 270 characters
     for i in range(0,len(allnewdata)):
         if len(allnewdata[i]) > 270:
-            df.loc[len(df)] = allnewdata[i].split()
-        #df.append(pd.DataFrame((data_by_line[i].split())).T)
+            if len(allnewdata[i].split()) > 37: # if the data has sensor name in data string
+                df.loc[len(df)] = allnewdata[i].split()
+            else: # if data does not have sensor name in string, put NA in string
+                datastring = allnewdata[i].split()
+                datastring.insert(2,'NA')
+                df.loc[len(df)] = datastring
 
     # change the data types for important variables
     df = df.astype({'samp_type': int, 'samp_num': int, 'calib_num': int, 'calib_rep': int, 

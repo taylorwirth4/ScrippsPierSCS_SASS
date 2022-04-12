@@ -34,7 +34,7 @@ def get_all_dr(path):
         alldata.extend(data_by_line) # concatenate each data file
 
     # rename the columns so it's easy to use
-    col_names = ['internet_datetime','IP','samp_type','samp_num','calib_num','calib_rep',
+    col_names = ['internet_datetime','IP','sensor_name','samp_type','samp_num','calib_num','calib_rep',
             'date','time','vbatt','vtherm','vint','vext','isobatt','contemp','pHtemp','press',
             'pHint','pHext','O2_MN','O2_SN','O2con','O2sat','O2temp',
             'Dphase','Bphase','Rphase','Bamp','Bpot','Ramp','Raw_Temp',
@@ -46,7 +46,13 @@ def get_all_dr(path):
     # this goes through each line and removes any data lines less than 270 characters
     for i in range(0,len(alldata)):
         if len(alldata[i]) > 270:
-            df.loc[len(df)] = alldata[i].split()
+            if len(alldata[i].split()) > 37: # if the data has sensor name in data string
+                df.loc[len(df)] = alldata[i].split()
+            else: # if data does not have sensor name in string, put NA in string
+                datastring = alldata[i].split()
+                datastring.insert(2,'NA')
+                df.loc[len(df)] = datastring
+                
         #df.append(pd.DataFrame((data_by_line[i].split())).T)
 
     # change the data types for important variables
@@ -56,8 +62,5 @@ def get_all_dr(path):
     'O2_MN': int, 'O2_SN': int, 'O2con': float, 'O2sat': float, 'O2temp': float,
     'SBEtemp': float, 'SBEcond': float, 'SBEsal': float, 'SBEday': int, 'SBEyear': int
     })
-
-    # drop data rows if SBE salinity is outside the standard deviation
-    df = df[np.abs(df['SBEsal']-df['SBEsal'].mean()) <= (df['SBEsal'].std())]
 
     return df, col_names
