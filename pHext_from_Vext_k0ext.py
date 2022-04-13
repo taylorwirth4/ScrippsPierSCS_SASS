@@ -16,7 +16,7 @@ def pHext_from_Vext_k0ext(k0ext, Vext, T_C, sal):
     R    = 8.31451          # J/(mol K)
     F    = 96487            # Faraday constant Coulomb / mol
 
-    k2_int = -0.00125
+    k2_int = -0.001101
     k2_ext = -0.001048
 
     # Lumped, converted quantities
@@ -36,7 +36,7 @@ def pHext_from_Vext_k0ext(k0ext, Vext, T_C, sal):
     log10gamma_HCl = 2*(-DHconst*np.sqrt(Z)/(1+1.394*np.sqrt(Z))+(0.08885-0.000111*T_C)*Z)
 
     # Nernstian pH calculations
-    pHext_free = -(((k0ext+k2_ext*(T_C))-Vext)-S_Nernst*(np.log10(mCl)+log10gamma_HCl))/S_Nernst # mol/kg-H2O
+    pHext_free = -(((k0ext+k2_ext*(T_C-0))-Vext)-S_Nernst*(np.log10(mCl)+log10gamma_HCl))/S_Nernst # mol/kg-H2O
     pHext_free = pHext_free-np.log10((1000-sal*35.165/35)/1000) # mol/kg-sw
     pHext_tot = pHext_free-np.log10(1+SO4_tot/K_HSO4)
 

@@ -1,13 +1,11 @@
 #  Calculate k0ext for each calibration point
-def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure):
+def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure):
       import plotly.express as px
-      from plotly.subplots import make_subplots
       import plotly.graph_objects as go
+      from plotly.subplots import make_subplots
       import pandas as pd
       import numpy as np
-
-
-
+      from matplotlib.cm import get_cmap
 
       fig = make_subplots(rows=5, cols=1,
                     specs=[[{"secondary_y": True}], [{"secondary_y": True}],
@@ -15,6 +13,8 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
                            [{"secondary_y": True}]],
                    vertical_spacing=0.01,
                    shared_xaxes=True,)
+
+
 # pH
       fig.add_trace(go.Scatter(x=datetime, y=pHint,
                     #mode='lines+markers',
@@ -26,6 +26,8 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
                     name='pHext'),
                     secondary_y=False,
              row=1, col=1)
+
+
 # delta pH
       fig.add_trace(go.Scatter(x=datetime, y=pHint-pHext,
                     #mode='lines+markers',
@@ -122,6 +124,5 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
       #                                  xanchor='left',
       #                                  xref="paper",
       #                                  yref="paper"))
-          
       fig.show()
       return
