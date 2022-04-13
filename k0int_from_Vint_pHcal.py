@@ -25,6 +25,6 @@ def k0int_from_Vint_pHcal(Vint, pHcal, T_C):
 
     # Nernst calibration coefficients, standard-ish potentials
     k0int_insitu = Vint-S_Nernst*pHcal # Calc E0int from Nernst & pH @ calibration point
-    k0int = k0int_insitu+k2_int*(25-T_C)
+    k0int = k0int_insitu-k2_int*(T_C)
 
     return k0int

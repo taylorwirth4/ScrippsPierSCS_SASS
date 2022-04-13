@@ -13,7 +13,7 @@ def get_recent_dr(path):
 
     # read the latest download date from the last downloaded file
     txt = glob.glob('*.txt')
-    df = pd.read_csv(txt[1],sep='\t')
+    df = pd.read_csv([i for i in txt if i.startswith('SIOpierSCS')][0],sep='\t')
     #df = pd.read_csv(' '.join(txt),sep='\t')
     
     # find the datetime of the last sample

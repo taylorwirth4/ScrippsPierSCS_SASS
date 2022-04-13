@@ -43,6 +43,6 @@ def k0ext_from_Vext_pHcal(Vext, pHcal, T_C, calsal=35):
 
     # Nernst calibration coefficients, standard-ish potentials
     k0ext_insitu = Vext+S_Nernst*np.log10(aHfree_aCl)
-    k0ext = k0ext_insitu+k2_ext*(25-T_C)
+    k0ext = k0ext_insitu-k2_ext*(T_C)
 
     return k0ext

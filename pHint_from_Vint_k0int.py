@@ -23,6 +23,6 @@ def pHint_from_Vint_k0int(k0int, Vint, T_C):
     S_Nernst = (R*T_K)/F*np.log(10) # ditto ^^^
 
     # Nernstian pH calculation
-    pHint_tot = (Vint-(k0int+k2_int*(T_C-25)))/S_Nernst # Calc pHint from Nernst, the "-0" added explicitly intentionally
+    pHint_tot = (Vint-(k0int+k2_int*(T_C-0)))/S_Nernst # Calc pHint from Nernst, the "-0" added explicitly intentionally
 
     return pHint_tot

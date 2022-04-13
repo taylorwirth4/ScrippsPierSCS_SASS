@@ -7,6 +7,8 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
       import numpy as np
 
 
+
+
       fig = make_subplots(rows=5, cols=1,
                     specs=[[{"secondary_y": True}], [{"secondary_y": True}],
                            [{"secondary_y": True}], [{"secondary_y": True}],
@@ -57,15 +59,16 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
                     name='O2temp'),
               secondary_y=False,
               row=4, col=1)
-      TC_offset = np.mean(SBEtemp)-np.mean(pHtemp)
 
-      fig.add_trace(go.Scatter(x=datetime, y=pHtemp+TC_offset,
-                    #mode='lines+markers',
-                    name='pHtemp',
-                    text=["pH_temp offset"],
-                    textposition="top center"),
-              secondary_y=False,
-              row=4, col=1)
+      TC_offset = np.mean(SBEtemp)-np.mean(pHtemp)
+      #fig.add_trace(go.Scatter(x=datetime, y=pHtemp+TC_offset,
+      #              #mode='lines+markers',
+      #              name='pHtemp',
+      #              text=["pH_temp offset"],
+      #              textposition="top center"),
+      #        secondary_y=False,
+      #        row=4, col=1)
+
 
 # Salinity and pressure
       fig.add_trace(go.Scatter(x=datetime, y=SBEsal,
@@ -109,16 +112,16 @@ def plot_all(datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,press
           x=1))
 
       # add TCoffset annotation
-      TCstring = 'pH_temp offset = '+ '{:.2f}'.format(TC_offset)
-      fig.add_annotation(dict(font=dict(color='#B6E880',size=12),
-                                        x=0,
-                                        y=.38,
-                                        showarrow=False,
-                                        text=TCstring,
-                                        textangle=0,
-                                        xanchor='left',
-                                        xref="paper",
-                                        yref="paper"))
+      #TCstring = 'pH_temp offset = '+ '{:.2f}'.format(TC_offset)
+      #fig.add_annotation(dict(font=dict(color='#B6E880',size=12),
+      #                                  x=0,
+      #                                  y=.38,
+      #                                  showarrow=False,
+      #                                  text=TCstring,
+      #                                  textangle=0,
+      #                                  xanchor='left',
+      #                                  xref="paper",
+      #                                  yref="paper"))
           
       fig.show()
       return
