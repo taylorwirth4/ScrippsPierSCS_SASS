@@ -6,8 +6,10 @@ def get_all_dr(path):
     import requests
     import pandas as pd
     import numpy as np
+    import urllib3
+    urllib3.disable_warnings()
 
-    soup = BeautifulSoup(requests.get(path).text,features="html.parser")
+    soup = BeautifulSoup(requests.get(path,verify=False).text,features="html.parser")
 
     allfolders = [] # find all folders in the path
     for link in soup.find_all('a'):
@@ -18,7 +20,7 @@ def get_all_dr(path):
 
     allpath = []
     for i in range(0,len(allfolders)): # go thru each folder and find the files
-        soup = BeautifulSoup(requests.get(allfolders[i]).text,features="html.parser")
+        soup = BeautifulSoup(requests.get(allfolders[i],verify=False).text,features="html.parser")
         for link in soup.find_all('a'):
             file = link.get('href')
             if file.startswith('data_') == True: # find the file names that start with 'data_'
@@ -28,7 +30,7 @@ def get_all_dr(path):
     alldata = [] # go thru each file and append the data
     for i in range(0,len(allpath)):
         path = allpath[i]
-        response = requests.get(path) # opens the .dat file
+        response = requests.get(path,verify=False) # opens the .dat file
         text = response.text # gets a text format of the .dat file
         data_by_line = text.split('\n') # splits the text by return line
         alldata.extend(data_by_line) # concatenate each data file

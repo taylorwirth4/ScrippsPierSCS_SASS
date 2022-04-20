@@ -7,8 +7,9 @@ def get_recent_dr(path):
     import requests
     import pandas as pd
     import numpy as np
-    import os
     import glob
+    import urllib3
+    urllib3.disable_warnings()
 
 
     # read the latest download date from the last downloaded file
@@ -26,8 +27,8 @@ def get_recent_dr(path):
     last_folder = path+year+'-'+mon+'/'
 
     # find the last download location in the SCCOOS dr
-    soup = BeautifulSoup(requests.get(last_path).text,features="html.parser")
-    response = requests.get(last_path) # opens the .dat file
+    soup = BeautifulSoup(requests.get(last_path,verify=False).text,features="html.parser")
+    response = requests.get(last_path,verify=False) # opens the .dat file
     text = response.text # gets a text format of the .dat file
     data_by_line = text.split('\n') # splits the text by return line
 
@@ -46,7 +47,7 @@ def get_recent_dr(path):
                 df.loc[len(df)] = datastring
                 
     # find the rest of the files and append the data
-    soup = BeautifulSoup(requests.get(path).text,features="html.parser")
+    soup = BeautifulSoup(requests.get(path,verify=False).text,features="html.parser")
     allfolders = [] # find all folders in the path
     for link in soup.find_all('a'):
         file = link.get('href')
@@ -59,7 +60,7 @@ def get_recent_dr(path):
 
     allnewpath = []
     for i in range(0,len(allnewfolders)): # go thru each folder and find the files
-        soup = BeautifulSoup(requests.get(allnewfolders[i]).text,features="html.parser")
+        soup = BeautifulSoup(requests.get(allnewfolders[i],verify=False).text,features="html.parser")
         for link in soup.find_all('a'):
             file = link.get('href')
             if file.startswith('data_') == True: # find the file names that start with 'data_'
@@ -71,7 +72,7 @@ def get_recent_dr(path):
     allnewdata = [] # go thru each file and append the data
     for i in range(0,len(allnewpath)):
         path = allnewpath[i]
-        response = requests.get(path) # opens the .dat file
+        response = requests.get(path,verify=False) # opens the .dat file
         text = response.text # gets a text format of the .dat file
         data_by_line = text.split('\n') # splits the text by return line
         allnewdata.extend(data_by_line) # concatenate each data file
