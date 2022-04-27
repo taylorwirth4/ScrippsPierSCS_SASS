@@ -1,5 +1,5 @@
 #  Calculate k0ext for each calibration point
-def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure):
+def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure,pdf):
       import plotly.express as px
       import plotly.graph_objects as go
       from plotly.subplots import make_subplots
@@ -61,6 +61,12 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
                     name='O2temp'),
               secondary_y=False,
               row=4, col=1)
+      fig.add_trace(go.Bar(x=pdf.date, y=pdf.prec,
+                             name='DailyPrecip',
+                          opacity=0.5),
+                      secondary_y=True,
+                      row=4,col=1)
+                      
 
       TC_offset = np.mean(SBEtemp)-np.mean(pHtemp)
       #fig.add_trace(go.Scatter(x=datetime, y=pHtemp+TC_offset,
@@ -94,7 +100,7 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
       fig['layout']['yaxis5']['title']='O2con (umol/kg)'
       fig['layout']['yaxis6']['title']='O2sat (%)'
       fig['layout']['yaxis7']['title']='Temperature (C)'
-      #fig['layout']['yaxis8']['title']='pHtemp (C)'
+      fig['layout']['yaxis8']['title']='Precip (in)'
       fig['layout']['yaxis9']['title']='Salinity (PSU)'
       fig['layout']['yaxis10']['title']='Pressure (dbar)'
 
