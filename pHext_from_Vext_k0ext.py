@@ -16,7 +16,7 @@ def pHext_from_Vext_k0ext(k0ext, Vext, T_C, sal):
     R    = 8.31451          # J/(mol K)
     F    = 96487            # Faraday constant Coulomb / mol
 
-    k2_int = -0.001101
+    k2_int = -0.001455
     k2_ext = -0.001048
 
     # Lumped, converted quantities

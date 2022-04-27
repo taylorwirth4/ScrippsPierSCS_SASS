@@ -15,7 +15,7 @@ def pHint_from_Vint_k0int(k0int, Vint, T_C):
     R    = 8.31451          # J/(mol K)
     F    = 96487            # Faraday constant Coulomb / mol
 
-    k2_int = -0.001101
+    k2_int = -0.001455
     k2_ext = -0.001048
     
     # Lumped, converted quantities
