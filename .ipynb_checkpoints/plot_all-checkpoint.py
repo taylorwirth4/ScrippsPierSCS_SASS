@@ -1,5 +1,5 @@
 #  Calculate k0ext for each calibration point
-def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure,pdf):
+def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure,pdf,ddf):
       import plotly.express as px
       import plotly.graph_objects as go
       from plotly.subplots import make_subplots
@@ -20,12 +20,21 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
                     #mode='lines+markers',
                     name='pHint'),
                     secondary_y=False,
-             row=1, col=1)
+                    row=1, col=1)
       fig.add_trace(go.Scatter(x=datetime, y=pHext,
                     #mode='lines+markers',
                     name='pHext'),
                     secondary_y=False,
-             row=1, col=1)
+                    row=1, col=1)
+      fig.add_trace(go.Scatter(x=ddf.date, y=ddf.pH_insitu,
+                    mode='markers',
+                    marker_symbol='circle-open',
+                    #marker_size=15,
+                    marker_color='black',
+                    name='pHdisc'),
+                    secondary_y=False,
+                    row=1,col=1)
+      fig.update_xaxes(range=[min(datetime), max(datetime)])
 
 
 # delta pH
@@ -34,7 +43,7 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
                     name='delta_pH (int-ext)'),
                     secondary_y=False,
              row=2, col=1)
-      fig.update_yaxes(range=[-np.max(pHint-pHext), np.max(pHint-pHext)], row=2, col=1)
+      fig.update_yaxes(range=[-np.max(abs(pHint-pHext)), np.max(np.abs(pHint-pHext))], row=2, col=1)
       fig.add_hline(y=0, row=2)
       fig.add_vline(x=datetime[1])
 
@@ -63,6 +72,7 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
               row=4, col=1)
       fig.add_trace(go.Bar(x=pdf.date, y=pdf.prec,
                              name='DailyPrecip',
+                           marker_color = 'red',
                           opacity=0.5),
                       secondary_y=True,
                       row=4,col=1)
@@ -103,21 +113,29 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
       fig['layout']['yaxis8']['title']='Precip (in)'
       fig['layout']['yaxis9']['title']='Salinity (PSU)'
       fig['layout']['yaxis10']['title']='Pressure (dbar)'
-
-      fig.update_layout(height=1000, width=950,
-                  title_text="SIO Pier SASS SCS",)
+    
+        
+      fig.update_layout(height=1000, width=950)
+      fig.update_layout(title={
+          'text' : 'SIO Pier SASS SCS',
+          'x' : 0.5,
+          'y' : 0.99,
+          'xanchor': 'center',
+          'yanchor': 'top'})
       fig.update_layout(hovermode='x unified')
       fig.update_traces(xaxis='x5')
-      #fig.update_xaxes(
-          #tick0 = datetime[0],
-          #dtick = "D1",
-      #    tickformat="%m/%d")
       fig.update_layout(legend=dict(
           orientation="h",
           yanchor="bottom",
-          y=1.02,
+          y=1.0,
          xanchor="right",
-          x=1))
+          x=0.9))
+    
+      fig.update_xaxes(
+          tickangle = 90,
+          nticks=50,
+          tickformat='%Y-%b-%d',
+      )
 
       # add TCoffset annotation
       #TCstring = 'pH_temp offset = '+ '{:.2f}'.format(TC_offset)
