@@ -9,5 +9,4 @@ dependencies:
   - plotly
   - requests
   - bs4
-  - PyCO2SYS
   - appmode
