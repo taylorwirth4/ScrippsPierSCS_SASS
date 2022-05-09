@@ -29,7 +29,7 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
       fig.add_trace(go.Scatter(x=ddf.date, y=ddf.pH_insitu,
                     mode='markers',
                     marker_symbol='circle-open',
-                    #marker_size=15,
+                    # marker_size=10,
                     marker_color='black',
                     name='pHdisc'),
                     secondary_y=False,
