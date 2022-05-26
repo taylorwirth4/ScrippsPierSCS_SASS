@@ -65,7 +65,7 @@ def get_recent_dr(path):
             file = link.get('href')
             if file.startswith('data_') == True: # find the file names that start with 'data_'
                 allnewpath.append(allnewfolders[i]+file) # append each file name into a list
-    allnewpath = allnewpath[1::2]
+    #allnewpath = allnewpath[1::2]
     findex = allnewpath.index(last_path) # find the folder index of the last data download 
     allnewpath = allnewpath[findex+1:] # create new list of new data folders
 
