@@ -53,7 +53,7 @@ def get_recent_dr(path):
         file = link.get('href')
         if file.startswith('202') == True: # find folders that start with a year string
             allfolders.append(path+file) # append a list of all the folders
-    allfolders = allfolders[1::2] # removes every other folder as there are duplicates
+    #allfolders = allfolders[1::2] # removes every other folder as there are duplicates
 
     findex = allfolders.index(last_folder) # find the folder index of the last data download 
     allnewfolders = allfolders[findex:] # create new list of new data folders
