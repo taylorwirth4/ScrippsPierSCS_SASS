@@ -1,5 +1,5 @@
 #  Calculate k0ext for each calibration point
-def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure,pdf,ddf):
+def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2atsat,O2sat,SBEtemp,O2temp,pHtemp,SBEsal,pressure,pdf,ddf):
       import plotly.express as px
       import plotly.graph_objects as go
       from plotly.subplots import make_subplots
@@ -49,15 +49,21 @@ def plot_all(unq_sen,df,datetime,pHint,pHext,O2con,O2sat,SBEtemp,O2temp,pHtemp,S
 
 # Oxygen
       fig.add_trace(go.Scatter(x=datetime, y=O2con,
-                    #mode='lines+markers',
-                    name='O2con'),
-              secondary_y=False,
+                        #mode='lines+markers',
+                        name='O2con'),
+                        secondary_y=False,
               row=3, col=1)
+      fig.add_trace(go.Scatter(x=datetime,y=O2atsat,
+                        name='O2atsat',
+                        opacity=0.5),
+                        secondary_y=False,
+                        row=3, col=1)
       fig.add_trace(go.Scatter(x=datetime, y=O2sat,
-                    #mode='lines+markers',
-                    name='O2sat'),
-              secondary_y=True,
-              row=3, col=1)
+                        #mode='lines+markers',
+                        name='O2sat'),
+                        secondary_y=True,
+                        row=3, col=1)
+
 
 # Temp (SBE & pH & Optode)
       fig.add_trace(go.Scatter(x=datetime, y=SBEtemp,
