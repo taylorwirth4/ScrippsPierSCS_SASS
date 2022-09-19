@@ -3,7 +3,7 @@ def pHint_from_Vint_k0int(k0int, Vint, T_C):
     '''
     Inputs
         Internal ref voltage (V)
-        Calibration coefficient, k0int (25 ºC value)
+        Calibration coefficient, k0int (0 ºC value)
         Measured T (C)
 
     Outputs
