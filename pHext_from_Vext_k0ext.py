@@ -3,7 +3,7 @@ def pHext_from_Vext_k0ext(k0ext, Vext, T_C, sal):
     '''
     Inputs
         External ref voltage (V)
-        Calibration coefficient, k0ext (25 ºC value)
+        Calibration coefficient, k0ext (0 ºC value)
         Measured T (C)
         Salinity (PSU)
 
